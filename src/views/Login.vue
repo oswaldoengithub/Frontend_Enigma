@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <v-flex aling="center">
+      <v-flex>
         <v-card
          :loading="loading"
          class="mx-auto my-0"
