@@ -1,66 +1,61 @@
 <template>
-    <v-app>
-      <v-container>
-
-
-   <v-card
-    :loading="loading"
-    class="mx-auto my-0"
-    max-width="574"
-    color= "#F5F5F5"
-  >
-    <template v-slot:loader="{ isActive }">
-      <v-progress-linear
-        :active="isActive"
-        color="deep-purple"
-        height="4"
-        indeterminate
-      ></v-progress-linear>
-    </template>
-
-    <v-img
-      max-height="200"
-      max-width="200"
-      src="../assets/logo-glc-black.svg"
-    ></v-img>
-
-    <v-card-item>
-      <v-card-title>¿No tienes cuenta?   <router-link to="/register">Regístrate aqui</router-link>
-      </v-card-title>
-
-    </v-card-item>
-
-    <v-card-text>
-        <v-form action class="form" @submit.prevent="login">
-                <label class="form-label" for="#email">Email:</label>
-                <input
-                  v-model="email"
-                  class="form-input"
-                  type="email"
-                  id="email"
-                  required
-                  placeholder="Email"
-                >
-                <label class="form-label" for="#password">Password:</label>
-                <input
-                  v-model="password"
-                  class="form-input"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                >
-                <p v-if="error" class="error"><v-alert type="error">Has introducido mal el email o la contraseña..</v-alert></p>
-                <input class="form-submit" type="submit" value="Ingresar">
-              </v-form> 
-    </v-card-text>
-
-    </v-card>
-
-
-
-      </v-container>
-    </v-app>
-  </template>
+  <v-app>
+    <v-container>
+      <v-flex aling="center">
+        <v-card
+         :loading="loading"
+         class="mx-auto my-0"
+         max-width="574"
+         color= "#F5F5F5"
+       >
+         <template v-slot:loader="{ isActive }">
+           <v-progress-linear
+             :active="isActive"
+             color="deep-purple"
+             height="4"
+             indeterminate
+           ></v-progress-linear>
+         </template>
+     
+         <v-img contain height="200"
+           src="../assets/logo-glc-black.svg"
+         ></v-img>
+     
+         <v-card-item>
+           <v-card-title>¿No tienes cuenta?<router-link to="/register">Regístrate aqui</router-link>
+           </v-card-title>
+     
+         </v-card-item>
+     
+         <v-card-text>
+             <v-form action class="form" @submit.prevent="login">
+                     <label class="form-label" for="#email">Email:</label>
+                     <input
+                       v-model="email"
+                       class="form-input"
+                       type="email"
+                       id="email"
+                       required
+                       placeholder="Email"
+                     >
+                     <label class="form-label" for="#password">Password:</label>
+                     <input
+                       v-model="password"
+                       class="form-input"
+                       type="password"
+                       id="password"
+                       placeholder="Password"
+                     >
+                     <p v-if="error" class="error"><v-alert type="error">Has introducido mal el email o la contraseña..</v-alert></p>
+                     <input class="form-submit" type="submit" value="Ingresar">
+                   </v-form> 
+         </v-card-text>
+     
+        </v-card>
+      </v-flex>
+    </v-container>
+  </v-app>
+</template>
   
   <script>
   
