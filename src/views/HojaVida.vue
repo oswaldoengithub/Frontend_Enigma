@@ -112,7 +112,7 @@
                     dense
                     required>
                     <template v-slot:append-outer>
-                        <date-picker v-model="VFecha"/>
+                        <date-picker v-model="VFecha" color="green lighten-1" header-color="black"/>
                     </template>
                     </v-text-field>
                   </v-flex>
@@ -360,15 +360,8 @@ export default {
   methods: {
     ...mapActions(['GetDatosClasificacionTipo']),
  
-      },
-
-
-
-
-  }
-    
-
-
+  },
+}
 </script>
 
 <style>
