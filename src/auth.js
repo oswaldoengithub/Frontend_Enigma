@@ -1,5 +1,5 @@
-import axios from "axios";
-import Cookies from "js-cookie";
+//import axios from "axios";
+//import Cookies from "js-cookie";
 
 //Ruta de la api de autorizacion Strapi
 const ENDPOINT_PATH = "http://localhost:1337/api/auth/local";
