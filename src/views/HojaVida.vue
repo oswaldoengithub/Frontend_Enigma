@@ -400,206 +400,243 @@
 
       <v-tab-item>
         <v-card class="mb-12 mx-auto mx-auto" color="grey lighten-4" height="550px">
-            <v-container>
+             <v-container >
 
-                      <!-- ----------------------------------------------------------------------------------------------------
-                      ------------------------------------------ NOMBRES -------------------------------------------------
-                      ---------------------------------------------------------------------------------------------------- -->
+        <!-- ----------------------------------------------------------------------------------------------------
+        ------------------------------------------ EMPRESA ---------------------------------------------
+        ---------------------------------------------------------------------------------------------------- -->
+         <!--  hola desde componente {{numero}}  -->
+        <v-form ref="form" v-model="valid" lazy-validation>
+        <br/>
+        <v-alert v-if="alertdeañoinicial == 1" dense type="error">
+           La fecha inicial no puede ser mayor a la fecha final 
+        </v-alert>        
 
-                <v-layout class="justify-center">                            
-                    <v-flex  xs4 >
-                    <v-text-field
-                    prepend-inner-icon="mdi-account"
-                    :counter="20"
-                    :rules="nameRules"
-                    v-model="VNombres"
-                    label="Nombres"
-                    filled
-                    dense                                                   
-                    required
-                    >
-                    </v-text-field>
-                    </v-flex>  
+             <!--   <p>Empresa: {{ Empresa }}</p>
+               <p>Area: {{ Area }}</p>
+             <p>El ne es: {{ Vestudio }}</p>
+              <p>El pia es: {{ VAñoInicial }}</p>
+              <p>El centro es es: {{ CentroEducativo }} {{this.Veducativo}}</p> -->
+
+              <v-layout class="justify-center">
+                  <div class="justify-center">
+                  <v-flex xs6 md1>
+                    <v-icon  text  class="justify-center" style="font-size: 50px;">mdi-store</v-icon>
+                  </v-flex>
+                  </div>
+                <v-flex  xs4 >
+                  <v-text-field
+                  v-model="VEmpresa"
+                  :counter="30"
+                  :rules="nameRules"
+                  label="Nombre de la Empresa"
+                  filled                        
+                  required
+                  >
+                  </v-text-field>
+                </v-flex>  
+
+                <!-- separador -->
+                <span style="color:white">-</span>  
+
+                <v-flex  xs4>
+                  <v-select
+                  :items="ListAreas"
+                  v-model="VArea"
+                  :rules="[v => !!v || 'El Área es requerida']"
+                  filled
+                  label="Área"
+                  dense
+                  ></v-select>
+                </v-flex>
+
+              </v-layout>
+
+
+             <!-- ----------------------------------------------------------------------------------------------------
+             ------------------------------------------ PERIODO ------------------------------------------------------
+             ---------------------------------------------------------------------------------------------------- -->                 
+
+               <v-layout class="justify-center">
+                  <div class="justify-left">
+                  <v-flex xs6 md1>
+                    <v-icon class="justify-center" style="font-size: 50px">mdi-update</v-icon>
+                  </v-flex>
+                  </div>
+
+                <v-flex  xs2>
+                  <v-select
+                  :items="año"
+                  v-model="VAñoInicialExperiencia"
+                  :rules="[v => !!v || 'El año inicial es requerido']"
+                  filled
+                  label="Año inicial"
+                  dense
+                  ></v-select>
+                </v-flex>
+
+                <!-- separador -->
+                <span style="color:white">-</span>                 
+
+                <v-flex  xs2>
+                  <v-select
+                  :items="mes"
+                  v-model="VMesInicial"
+                  :rules="[v => !!v || 'El mes inicial es requerido']"
+                  filled
+                  label="Mes inicial"
+                  dense
+                  ></v-select>
+                </v-flex>                
+
+                <!-- separador -->
+                <span style="color:white">-</span> 
+
+                <v-flex  xs2>
+                  <v-select
+                  :items="año"
+                  v-model="VAñoFinal"
+                  :rules="[v => !!v || 'El año final es requerido']"
+                  filled
+                  label="Año final"
+                  dense
+                  ></v-select>
+                </v-flex>
+
+                <!-- separador -->
+                <span style="color:white">-</span>                 
+
+                <v-flex  xs2>
+                  <v-select
+                  :items="mes"
+                  v-model="VMesFinal"
+                  :rules="[v => !!v || 'El mes final es requerido']"
+                  filled
+                  label="Mes final"
+                  dense
+                  ></v-select>
+                </v-flex>                
+                
+              </v-layout>  
+
+
+                <!-- ----------------------------------------------------------------------------------------------------
+                ------------------------------------------ UBICACION -----------------------------------------------
+                ---------------------------------------------------------------------------------------------------- -->                 
+
+                  <v-layout class="justify-center">
+                      <div class="justify-left">
+                      <v-flex xs6 md1>
+                        <v-icon class="justify-center" style="font-size: 50px">mdi-city</v-icon>
+                      </v-flex>
+                      </div>
+
+                    <v-flex  xs4>
+                      <v-select
+                      :items="ListDepartamento"
+                      v-model="VDepto"
+                      :rules="[v => !!v || 'El departamento es requerido']"
+                      filled
+                      label="Departamento"
+                      dense
+                      ></v-select>
+                    </v-flex>
 
                     <!-- separador -->
-                    <span style="color:white">-</span>  
-
-                    <v-flex  xs4 >
-                    <v-text-field
-                    prepend-inner-icon="mdi-account"
-                    :counter="20"
-                    :rules="nameRules"
-                    v-model="VApellidos"
-                    label="Apellidos"
-                    filled
-                    dense                        
-                    required
-                    >
-                    </v-text-field>
-                    </v-flex>             
-                </v-layout>
-
-
-                      <!-- ----------------------------------------------------------------------------------------------------
-                      ------------------------------------------ IDENTIFICACION -----------------------------------------------
-                      ---------------------------------------------------------------------------------------------------- -->              
-                <v-layout class="justify-center">                           
-                  <v-flex  xs4>
-                    <v-select
-                    prepend-inner-icon="mdi-account-box-outline"
-                    :items= FiltroTipoDocumento
-                    :rules="[v => !!v || 'El tipo de identificacion es requerido']"
-                    v-model="VTipoId"
-                    label="Tipo Identificación"
-                    filled
-                    dense
-                    required
-                    ></v-select>
-                  </v-flex>
-
                     <span style="color:white">-</span> 
 
-                  <v-flex  xs4>
-                    <v-text-field
-                    prepend-inner-icon="mdi-id-card"
-                    :counter="20" 
-                    :rules="NroIdRules"                   
-                    label="Número Identificación"
-                    filled 
-                    dense                       
-                    required
-                    >
-                    </v-text-field>
-                  </v-flex>  
-                </v-layout>
+                    <v-flex  xs4>
+                      <v-select
+                      :items= FiltraMunicipio
+                      v-model="VMuni"
+                      :rules="[v => !!v || 'El municipio es requerido']"
+                      filled
+                      label="Municipio"
+                      dense
+                      ></v-select>
+                    </v-flex>
+                    
+                  </v-layout>  
 
+             <!-- ----------------------------------------------------------------------------------------------------
+             ------------------------------------------ ESTADO -------------------------------------------------------
+             ---------------------------------------------------------------------------------------------------- -->              
 
-                      <!-- ----------------------------------------------------------------------------------------------------
-                      ------------------------------------------ FECHA NACIMIENTO ---------------------------------------------
-                      ---------------------------------------------------------------------------------------------------- -->                 
-
-                <v-layout class="justify-center">
-                  <v-flex justify-left class="grey lighten-5" xs4>
-                    <v-text-field
-                    prepend-inner-icon="mdi-cake-variant" 
-                    v-model="VFecha"                       
-                    label="Fecha Nacimiento"
-                    filled
-                    dense
-                    required>
-                    <template v-slot:append-outer>
-                        <date-picker v-model="VFecha" color="green lighten-1" header-color="black"/>
-                    </template>
-                    </v-text-field>
-                  </v-flex>
-
-                  <v-flex  xs4>
-                    <v-select
-                    prepend-inner-icon="mdi-human"
-                    :items = FiltroGenero
-                    v-model="VGenero"
-                    :rules="[v => !!v || 'El Campo Género es requerido']"
-                    label="Genero"
-                    filled
-                    dense
-                    required
-                    ></v-select>
-                  </v-flex>                    
-                </v-layout>
-
-
-                      <!-- ----------------------------------------------------------------------------------------------------
-                      ------------------------------------------ UBICACION -----------------------------------------------
-                      ---------------------------------------------------------------------------------------------------- -->                 
-
-                <v-layout class="justify-center">
+              <v-layout class="justify-center">
+                  <div class="justify-center">
+                    <v-flex xs6 md1>
+                      <v-icon class="justify-center" style="font-size: 50px">mdi-folder-account</v-icon>
+                    </v-flex>
+                  </div>
                   <v-flex  xs4 >
-                    <v-select
-                    prepend-inner-icon="mdi-web"
-                    v-model="Vpais"
-                    :counter="20"
-                    :items=this.Paises
-                    label="Pais"
-                    filled
-                    dense                        
-                    required
-                    >
-                    </v-select>
-                    </v-flex>
+                      <v-text-field
+                      v-model="VCargo"
+                      :counter="30"
+                      :rules="RulesCargo"
+                      label="Cargo"
+                      filled                        
+                      required
+                      >
+                      </v-text-field>
+                    </v-flex>  
 
-                    <span style="color:white">-</span>
+                <span style="color:white">-</span> 
 
-                    <v-flex  xs4>
-                    <v-select
-                    prepend-inner-icon="mdi-city"
-                    :items = FiltroDepto
-                    v-model="VDepto"
-                    :rules="[v => !!v || 'El departamento es requerido']"
-                    label="Departamento Residencia"
-                    filled
-                    dense
-                    ></v-select>
-                    </v-flex>
-                  </v-layout>    
+                 <v-flex  xs4>
+                     <v-textarea
+                    outlined
+                    height="90"
+                    v-model="VFunciones"
+                    :rules="RulesFunciones"
+                    name="Funciones"
+                    label="Funciones y logros del cargo"
+                    
+                    ></v-textarea>                   
+                </v-flex> 
   
-                  <v-layout class="justify-center">
-                    <v-flex  xs4>
-                    <v-select
-                    prepend-inner-icon="mdi-city"
-                    :items = FiltroMcipios
-                    v-model="VMuni"
-                    :rules="[v => !!v || 'El municipio es requerido']"
-                    label="Municipio Residencia"
-                    filled
-                    dense
-                    ></v-select>
-                    </v-flex>                    
-                      <!-- ----------------------------------------------------------------------------------------------------
-                      ------------------------------------------ TELEFONO -------------------------------------------------
-                      ---------------------------------------------------------------------------------------------------- -->
-                      <span style="color:white">-</span>
-                    <v-flex  xs4 >
-                    <v-text-field
-                    prepend-inner-icon="mdi-cellphone"
-                    v-model="VTelefono"
-                    :counter="20"
-                    :rules="NroTelRules"
-                    label="Telefono"
-                    filled
-                    dense                        
-                    required
-                    >
-                    </v-text-field>
-                    </v-flex>
-                </v-layout> 
+              </v-layout>  
 
-                        <!-- ----------------------------------------------------------------------------------------------------
-                      ------------------------------------------ DIRECCION -------------------------------------------------
-                      ---------------------------------------------------------------------------------------------------- --> 
 
-                <v-layout class="justify-center">
-                    <span style="color:white">-</span>             
+           
+              <!-- Botones de accion en el componente de formacion -->
+              <v-layout class="justify-center"> 
+                  <div class="justify-center">
+                  <v-flex >
+                      <v-btn outlined center :disabled="!valid" color="success" class=" mr-4" @click="ValidarFormulario()" >
+                        Validar y continuar
+                      </v-btn> 
+                    
+                      <v-btn outlined center color="info" class=" mr-4" @click="Limpiar">Limpiar</v-btn>
+                      <v-btn outlined center color="error" class=" mr-4" @click="reset">Cancelar</v-btn> 
+                  </v-flex>
+                  </div>
+              </v-layout>  
 
-                    <v-flex  xs4 >
-                    <v-text-field
-                    prepend-inner-icon="mdi-sign-direction"
-                    v-model="VDireccion"
-                    :counter="40"
-                    :rules="DireccionlRules"
-                    label="Direccion"
-                    filled 
-                    dense                       
-                    required
-                    >
-                    </v-text-field>
-                    </v-flex> 
-                </v-layout> 
-                                
-                <div class="text-center">                   
-                    <v-btn color="black" class="ma-2 white--text" >Guardar</v-btn>
-                    <v-btn color="black" class="ma-2 white--text">Limpiar</v-btn>
-                </div>
-            </v-container>
+              <br/>  
+              <v-divider
+              light 
+              ></v-divider>         
+         
+<!--             <v-btn
+              color="error"
+              class="mr-4"
+              @click="reset"
+            >
+              Limpiar
+            </v-btn> -->
+
+
+            <!-- @click="e1 = 2" -->
+            <!--    <v-btn
+           color="primary"              
+               @click="e1 = 2"
+            >
+              Continue
+            </v-btn>   -->
+
+        </v-form>           
+
+    </v-container> 
         </v-card>
       </v-tab-item>
       
@@ -699,7 +736,25 @@ export default {
           { value: '5', text: 'Postgrado / Especialización' },
           { value: '6', text: 'Postgrado / Maestria' },
           { value: '7', text: 'Postgrado / Doctorado' },
-        ],   
+        ], 
+              //AREAS LABORALES
+        ListAreas: [
+          { value: '1', text: 'Atención a clientes' },
+          { value: '2', text: 'Odontología general' },
+          { value: '3', text: 'Ortodoncia' },
+          { value: '4', text: 'Implantes' },
+          { value: '5', text: 'Endodoncia' },
+          { value: '6', text: 'Periodoncia' },
+          { value: '7', text: 'Estética dental y Perioral' },
+          { value: '8', text: 'Cirugía oral' },
+          { value: '9', text: 'Prótesis fija' },
+          { value: '10', text: 'Prótesis removible' },
+          { value: '11', text: 'Odontopediatría' },
+          { value: '12', text: 'Auxiliar' },
+          { value: '13', text: 'Secretaria' },
+
+        ],
+        
         año: [
           { value: 2030, text: '2030' },
           { value: 2029, text: '2029' },
@@ -788,7 +843,7 @@ export default {
   beforeMount() {
     store.dispatch('GetDatosClasificacionTipo');
     
-
+        //FORMACION ACADEMICA
       if (store.state.IndexFormacion !== '' && store.state.AccionFormacion == "Editar"){
 
       for(let i=0; i< store.state.FormacionAcademica.length; i++){
@@ -809,7 +864,38 @@ export default {
           }
         } 
       }
-    },
+
+        //EXPERIENCIA LABORAL
+
+      {
+        if (store.state.IndexExperiencia !== '' && store.state.AccionExperiencia == "Editar")
+      {
+          for(let i=0; i< store.state.ExperienciaProfesional.length; i++){
+              
+              if( i == store.state.IndexExperiencia)
+              {                              
+                  var FiltroArea =  this.ListAreas.filter(function(area) {
+                        return area.text == store.state.ExperienciaProfesional[i].Area;
+                    });
+
+         
+                    this.VEmpresa     = store.state.ExperienciaProfesional[i].Empresa ;
+                    this.VArea        = FiltroArea[0].value
+                    this.VAñoInicialExperiencia  = store.state.ExperienciaProfesional[i].AñoInicialExperiencia.toString();
+                    this.VMesInicial  = store.state.ExperienciaProfesional[i].MesInicialExperiencia;
+                    this.VAñoFinal    = store.state.ExperienciaProfesional[i].AñoFinalExperiencia.toString();
+                    this.VMesFinal    = store.state.ExperienciaProfesional[i].MesFinalExperiencia;
+                    this.VMuni        = store.state.ExperienciaProfesional[i].McpioExperiencia;
+                    this.VDepto       = store.state.ExperienciaProfesional[i].DeptoExperiencia;
+                    this.VCargo       = store.state.ExperienciaProfesional[i].Cargo;
+                    this.VFunciones   = store.state.ExperienciaProfesional[i].Funciones;                
+
+              }
+            } 
+      }
+    }
+
+  },
 
   computed:{
     ...mapState(['DatosClasificacionTipo',
@@ -845,12 +931,9 @@ export default {
 
   methods: {
     ...mapActions(['GetDatosClasificacionTipo']),
- 
- 
- // Se mapean las mutaciones
-            
-
-            validate() {
+    
+    
+    validate() {
               this.$refs.form.validate()
             },
             
