@@ -787,7 +787,29 @@ export default {
 
   beforeMount() {
     store.dispatch('GetDatosClasificacionTipo');
-    },  
+    
+
+      if (store.state.IndexFormacion !== '' && store.state.AccionFormacion == "Editar"){
+
+      for(let i=0; i< store.state.FormacionAcademica.length; i++){
+          
+          if( i == store.state.IndexFormacion)
+          {                              
+               var FiltroNivel =  this.nestudios.filter(function(nivel) {
+                    return nivel.text == store.state.FormacionAcademica[i].Nivel;
+                });
+
+              this.VEducativo   = store.state.FormacionAcademica[i].CentroEducativo
+              this.VEstudio     = FiltroNivel[0].value
+              this.VAñoInicial  = store.state.FormacionAcademica[i].AñoInicial
+              this.VMesInicial  = store.state.FormacionAcademica[i].MesInicial
+              this.VAñoFinal    = store.state.FormacionAcademica[i].AñoFinal
+              this.VMesFinal    = store.state.FormacionAcademica[i].MesFinal
+              this.VEeducacion  = store.state.FormacionAcademica[i].Estado
+          }
+        } 
+      }
+    },
 
   computed:{
     ...mapState(['DatosClasificacionTipo',
@@ -824,47 +846,8 @@ export default {
   methods: {
     ...mapActions(['GetDatosClasificacionTipo']),
  
-  },
-}
-</script>
-
- <script> 
- export default {
-   
-
-     
-
-  
-    beforeMount() 
-    {
-      if (store.state.IndexFormacion !== '' && store.state.AccionFormacion == "Editar"){
-
-      for(let i=0; i< store.state.FormacionAcademica.length; i++){
-          
-          if( i == store.state.IndexFormacion)
-          {                              
-               var FiltroNivel =  this.nestudios.filter(function(nivel) {
-                    return nivel.text == store.state.FormacionAcademica[i].Nivel;
-                });
-
-              this.VEducativo   = store.state.FormacionAcademica[i].CentroEducativo
-              this.VEstudio     = FiltroNivel[0].value
-              this.VAñoInicial  = store.state.FormacionAcademica[i].AñoInicial
-              this.VMesInicial  = store.state.FormacionAcademica[i].MesInicial
-              this.VAñoFinal    = store.state.FormacionAcademica[i].AñoFinal
-              this.VMesFinal    = store.state.FormacionAcademica[i].MesFinal
-              this.VEeducacion  = store.state.FormacionAcademica[i].Estado
-          }
-        } 
-      }
-    },
-
-
-
-  methods: 
-       {
-
-            // Se mapean las mutaciones
+ 
+ // Se mapean las mutaciones
             
 
             validate() {

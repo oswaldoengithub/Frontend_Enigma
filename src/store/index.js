@@ -59,14 +59,6 @@ export default new Vuex.Store({
     }, 
     
     AsignarValoresAcademicos(state,payload){
-      /*       state.CentroEducativo = payload.Centro
-            state.NivelEstudios = payload.Nivel
-            state.AñoInicial = payload.PeriodoInicial
-            state.MesInicial = payload.MesI
-            state.AñoFinal = payload.PeriodoFinal
-            state.MesFinal = payload.MesF
-            state.EstadoEducacion= payload.EstadoEdu */
-      
             state.FormacionAcademica.push({
               CentroEducativo : payload.Centro,
               Nivel : payload.Nivel,
