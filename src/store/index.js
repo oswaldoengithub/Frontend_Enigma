@@ -9,11 +9,23 @@ export default new Vuex.Store({
   state: {
     DatosClasificacionTipo:[],
     DatosPersonales:[],
+    ValorLogin: 0,
+    username:"",
+    tipoususrio: "",
   },
   getters: {
   },
   mutations: {
     FiltroTipoDocumento(){},
+
+    AsignarValorLogin(state,payload){ 
+      state.VarLogin = payload.ValorLogin
+      state.username = payload.username
+      state.TipoUsuario = payload.tipousuario
+    },
+
+
+
     AsignarClasificacionTipo(state,payload){ 
       
       state.DatosClasificacionTipo.push({
@@ -134,7 +146,10 @@ export default new Vuex.Store({
       GetDatosClasificacionTipo: async function({commit,state}){  
       
         try {  
+          console.log ("hola")
           const Key = 'Bearer ' + auth.getUserLogged().token;
+          console.log("key:",key)
+
           var response = await axios.get('http://localhost:1337/api/tbl-tipo-clasificacions',{
             headers: {Authorization: Key }                   
           });
@@ -160,7 +175,7 @@ export default new Vuex.Store({
           } 
         } 
         catch (error){                  
-          console.log("Error, no trajo informacion del api para listar ofertas ",error);
+          console.log("Error, no trajo informacion del api para listar clasificaciones tipo ",error);
 
           commit('AsignarClasificacionTipo', { 
             Tipo:"",

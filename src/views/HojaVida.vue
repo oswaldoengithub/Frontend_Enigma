@@ -142,32 +142,34 @@
 
               <span style="color: white">-</span>
               <v-flex xs4>
-                <v-text-field
+                <v-select
                   prepend-inner-icon="mdi-city"
                   v-model="VCodDeptoNacimiento"
+                  :items="FiltroDepto"
                   :counter="20"
                   label="Codigo Departamento Nacimiento"
                   filled
                   dense
                   required
-                  :rules="[(v) => !!v || 'El Campo Codigo Departamento Nacimiento es requerido']"
+                  :rules="[(v) => !!v || 'El Campo Codigo Departamento es requerido']"
                 >
-                </v-text-field>
+                </v-select>
               </v-flex>
 
               <span style="color: white">-</span>
               <v-flex xs4>
-                <v-text-field
+                <v-select
                   prepend-inner-icon="mdi-city"
                   v-model="VCodMunNacimiento"
+                  :items="FiltroMcipios"
                   :counter="20"
-                  :rules="[(v) => !!v || 'El Campo Codigo Municipio Nacimiento es requerido']"
+                  :rules="[(v) => !!v || 'El Campo Codigo Municipio es requerido']"
                   label="Codigo Municipio Nacimiento"
                   filled
                   dense
                   required
                 >
-                </v-text-field>
+                </v-select>
               </v-flex>
             </v-layout>
             <!------------------------------>
@@ -337,6 +339,22 @@
               >
             </div>
           </v-form>
+          <v-snackbar
+      v-model="snackbar"
+      
+    >
+      {{ mensaje }}
+
+      <v-btn
+          color="blue"
+          text
+         
+          @click="snackbar = false"
+        >
+          Cerrar
+        </v-btn>
+      
+    </v-snackbar>
         </v-container>
       </v-tab-item>
 
@@ -728,6 +746,8 @@ export default {
   },
   data: () => ({
     tab: "option-1",
+    snackbar:true,
+    mensaje:"Guardado con exito",
     //V-models de datos personales
     VNombres: "",
     VApellidos: "",
@@ -1075,7 +1095,10 @@ export default {
               PaisResidencia: this.VPaisResidencia,
               DeptoResidencia: this.VDeptoResidencia,
               MuniResidencia: this.VMuniResidencia,
-              }; 
+              VCodPaisNacimiento: this.VCodPaisNacimiento,
+              VCodDeptoNacimiento: this.VCodDeptoNacimiento,
+              VCodMunNacimiento: this.VCodMunNacimiento
+            }; 
 
               //Actualizar el estado de datos personales con la mutacion
               store.commit('AsignarValoresPersonales',{Candidato})

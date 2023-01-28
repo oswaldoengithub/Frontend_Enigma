@@ -92,6 +92,7 @@ import store from "../store/index.js";
 import {mapMutations, mapState} from 'vuex';
 
 export default {
+  name: "Registro",
   data: () => ({
     email: "",
     password: "",

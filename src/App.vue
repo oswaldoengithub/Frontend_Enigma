@@ -10,19 +10,43 @@
       <v-toolbar-title>Gran Logia de Colombia</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn icon to="/">
+      <!-- <v-btn icon to="/">
         <v-icon>mdi-home</v-icon>
         <v-tooltip activator="parent" location="bottom">Inicio</v-tooltip>
-      </v-btn>
+      </v-btn> -->
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+     
+        <span v-if="username !== '' ">Bienvenido: {{username}}</span>
+   
 
-      <v-btn icon :to="{ name: 'login' }">
-        <v-icon>mdi-login</v-icon>
-        <v-tooltip activator="parent" location="bottom">Ingresar</v-tooltip>
-      </v-btn>
+      <v-btn icon :to="{ name: 'homeafiliadoview' }">
+      <v-tooltip bottom >
+      <template v-slot:activator="{ on, attrs }">
+        <v-icon color="primary" dark v-bind="attrs" v-on="on" >
+          mdi-home
+        </v-icon>
+      </template>
+      <span>Ingresar</span>
+    </v-tooltip>
+  </v-btn>
+
+
+
+<!--       <v-btn small v-if="VarLogin == 1 && TipoUsuario == 'Persona'" class="blue darken-1" :to="{name:'areapersona'}">
+        <v-icon v-if="TipoUsuario == 'Persona' || TipoUsuario == ''" >mdi-account</v-icon>
+        <v-icon v-if="TipoUsuario == 'Empresa' || TipoUsuario == ''" >mdi-home-modern</v-icon>
+        <span class="mr-0 ">{{NombreUsuario.toLowerCase()}}</span>
+      </v-btn> -->
+
+
+
+      
+
+
+      <v-btn small @click="cerrarSession()" class="dark" text>
+        <span class="mr-2">Cerrar Sesión</span> 
+        <v-icon>mdi-logout</v-icon>
+        </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -56,6 +80,12 @@
 </template>
 
 <script>
+
+import auth from "@/auth";
+import store from "./store/index.js";
+import { mapState } from "vuex";
+
+
 export default {
   name: "App",
 
@@ -67,5 +97,30 @@ export default {
         'mdi-instagram',
       ],
   }),
+
+  methods:{
+    async cerrarSession() {        
+        try {
+          await auth.deleteUserLogged();
+          store.commit('AsignarValorLogin', { ValorLogin: 0, username:'',tipoususrio :'' });
+          this.$router.push("/login")
+        } catch (error) {
+          console.log(error);
+        } 
+    },
+
+  },
+
+  computed: 
+  {
+      userLogged() {
+        return auth.getUserLogged();
+      },
+
+  ...mapState(['ValorLogin','username','tipousuario'])
+  }
+
+  
+
 };
 </script>

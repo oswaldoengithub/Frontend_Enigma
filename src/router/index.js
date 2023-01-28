@@ -25,6 +25,15 @@ const routes = [
     name: 'hojavida',
     component: () => import(/* webpackChunkName: "about" */ '../views/HojaVida.vue')
   },
+  ,
+  {
+    path: '/homeafiliadoview',
+    name: 'homeafiliadoview',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HomeAfiliadoView.vue')
+  },
+
+
+  
 ]
 const router = new VueRouter({
   mode: 'history',

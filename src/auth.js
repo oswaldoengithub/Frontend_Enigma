@@ -8,13 +8,15 @@ const ENDPOINT_PATH = "http://localhost:1337/api/auth/local";
 export default {
 
     setUserLogged(userLogged) {
-      Cookies.set("userLogged", JSON.stringify(userLogged));      
+      Cookies.set("userLogged", JSON.stringify(userLogged)); 
+         
       //Cookies.set("userLogged", JSON.stringify(userLogged));      
     //Cookies.set("userLogged", userLogged);
     },
 
     getUserLogged() {
       return JSON.parse(Cookies.get('userLogged'));
+
       //return JSON.stringify(Cookies.get('userLogged'));    
 /*       if (JSON.stringify(Cookies.get('userLogged')) == ""){
         return JSON.stringify(Cookies.get('userLogged')); 
