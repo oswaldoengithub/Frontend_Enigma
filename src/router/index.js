@@ -31,6 +31,11 @@ const routes = [
     name: 'homeafiliadoview',
     component: () => import(/* webpackChunkName: "about" */ '../views/HomeAfiliadoView.vue')
   },
+  {
+    path: '/homeadminview',
+    name: 'homeadminview',
+    component: () => import(/* webpackChunkName: "about" */ '../views/HomeAdminView.vue')
+  },
 
 
   

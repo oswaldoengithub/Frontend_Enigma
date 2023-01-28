@@ -792,7 +792,7 @@ export default {
     ListDepartamento: Departamentos,
     ListMcipios: Mcipios,
     ListTipoId: [],
-    ListGenero: [],
+    EstadoCivil: [],
     FiltraMunicipio: "",
     NroIdRules: "",
     telRules: "",
@@ -1055,7 +1055,7 @@ export default {
       ));
     },
     EstadoCivil: function () {
-      return (this.ListGenero = this.DatosClasificacionTipo.filter(
+      return (this.EstadoCivil = this.DatosClasificacionTipo.filter(
         (Gen) => Gen.IdClasificacion == 2
       ));
     },
