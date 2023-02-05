@@ -11,7 +11,7 @@ export default new Vuex.Store({
     DatosPersonales: [],
     ValorLogin: 0,
     username: "",
-    tipoususrio: "",
+    tipousuario: "",
   },
   getters: {
   },
@@ -21,7 +21,7 @@ export default new Vuex.Store({
     AsignarValorLogin(state, payload) {
       state.VarLogin = payload.ValorLogin
       state.username = payload.username
-      state.TipoUsuario = payload.tipousuario
+      state.tipousuario = payload.tipousuario
     },
 
 
@@ -91,68 +91,80 @@ export default new Vuex.Store({
       }
 
       const Key = 'Bearer ' + auth.getUserLogged().token;
-        try {
-         axios.post('http://localhost:1337/api/tbl-datos-personales',persona,{
-           headers: {Authorization: Key}
-         })
-         .then (response =>{          
-           //console.log(response.data)    
-           if(response.data)
-           {
-             console.log("Registro persona editado con éxito");            
-           }
-           else
-           {
-             console.log("Error al tratar de editar la información de la persona");
-           }  
-         })
-           .catch (e => function(error){
-           console.log(error)
-           
- 
-         }) 
-         
-       } catch (error) {
-         console.log("paila")
-         console.log(error)
-       }
+      try {
+        axios.post('http://localhost:1337/api/tbl-datos-personales', persona, {
+          headers: { Authorization: Key }
+        })
+          .then(response => {
+            //console.log(response.data)    
+            if (response.data) {
+              console.log("Registro persona editado con éxito");
+            }
+            else {
+              console.log("Error al tratar de editar la información de la persona");
+            }
+          })
+          .catch(e => function (error) {
+            console.log(error)
+          })
+
+      } catch (error) {
+        console.log("paila")
+        console.log(error)
+      }
     },
-    GetDatosClasificacionTipo: async function ({ commit }) {
+
+   /*  GetDatoAfiliado: async function ({}) {
 
       try {
         const Key = 'Bearer ' + auth.getUserLogged().token;
-        var response = await axios.get('http://localhost:1337/api/tbl-tipo-clasificacions', {
+        var response = await axios.get('http://localhost:1337/api/tbl-datos-personales', persona, {
           headers: { Authorization: Key }
         });
-
-        if (response.data) {
-          //console.log(response.data.data)
-
-          /************** Llenar valores Datos  **************/
-          for (let item = 0; item < response.data.data.length; item++) {
-
-            commit('AsignarClasificacionTipo', {
-              Tipo: response.data.data[item].attributes.Tipo,
-              Descripcion: response.data.data[item].attributes.Descripcion,
-              IdClasificacion: response.data.data[item].attributes.IdClasificacion
-            })
-          }
-
-        }
-        else {
-          console.log("Error al extraer informacion del API ");
-        }
+  
       }
       catch (error) {
         console.log("Error, no trajo informacion del api para listar clasificaciones tipo ", error);
+      }
+    }, */
 
-        commit('AsignarClasificacionTipo', {
-          Tipo: "",
-          Descripcion: "",
-          IdClasificacion: ""
-        })
+   
+  GetDatosClasificacionTipo: async function ({ commit }) {
+
+    try {
+      const Key = 'Bearer ' + auth.getUserLogged().token;
+      var response = await axios.get('http://localhost:1337/api/tbl-tipo-clasificacions', {
+        headers: { Authorization: Key }
+      });
+
+      if (response.data) {
+        //console.log(response.data.data)
+
+        /************** Llenar valores Datos  **************/
+        for (let item = 0; item < response.data.data.length; item++) {
+
+          commit('AsignarClasificacionTipo', {
+            Tipo: response.data.data[item].attributes.Tipo,
+            Descripcion: response.data.data[item].attributes.Descripcion,
+            IdClasificacion: response.data.data[item].attributes.IdClasificacion
+          })
+        }
+
+      }
+      else {
+        console.log("Error al extraer informacion del API ");
       }
     }
+    catch (error) {
+      console.log("Error, no trajo informacion del api para listar clasificaciones tipo ", error);
 
+      commit('AsignarClasificacionTipo', {
+        Tipo: "",
+        Descripcion: "",
+        IdClasificacion: ""
+      })
+    }
   }
+
+}
 });

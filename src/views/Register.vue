@@ -114,10 +114,10 @@ export default {
             const username = this.username
             const email = this.email
             const password = this.password
-            const TipoIngreso = store.state.tipousuario
+            const tipousuario = store.state.tipousuario
             //const CodigoHabilitacion = this.CodigoHabilitacion
         
-            const user = {username,email, password};
+            const user = {username,email, password,tipousuario};
             axios.post("http://localhost:1337/api/auth/local/register", user)
             .then(response => {
               this.RegistroExitoso = 1;
@@ -147,7 +147,7 @@ export default {
 
   
   computed:{
-    ...mapState(['VarLogin','TipoIngreso']),
+    ...mapState(['VarLogin','tipousuario']),
 
   },  
 };

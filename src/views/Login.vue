@@ -62,9 +62,10 @@ export default {
     password: "",
     error: false,
   }),
+ 
   methods: {
     ...mapMutations(["AsignarValorLogin"]),
-    ...mapActions(["GetDatosPersona"]),
+    ...mapActions(["GetDatosPersona", "Accion_GuardarValoresPersonales"]),
 
     async login() {
       try {
@@ -77,7 +78,7 @@ export default {
           username: res.data.user.username,
         };
 
-        console.log("user:", user);
+        console.log(user);
 
         await auth.setUserLogged(user);
         const Name = await auth.getUserLogged();
@@ -87,9 +88,8 @@ export default {
           username: Name.username,
           tipousuario: Name.tipousuario,
         });
-
-        //Se llama la accion que debe llenar los estados de la data de la persona
-          //selecciona el tipo de usuario
+       // console.log(this.email);
+                 //selecciona el tipo de usuario
        if (Name.tipousuario == "Administrador") {
           this.$router.push("/HomeAdminView");
         } else {
@@ -101,9 +101,10 @@ export default {
         //store.commit('AsignarValorLogin', { ValorLogin: 0 ,user: 'xxx',tipoususrio:''});
       }
     },
+
   },
   computed: {
-    ...mapState(["VarLogin", "TipoIngreso"]),
+    ...mapState(["VarLogin", "tipousuario"]),
 
     userLogged() {
       return auth.getUserLogged();
