@@ -4,16 +4,18 @@
       <v-tab> <v-icon left>mdi-account</v-icon>Informacion Personal </v-tab>
       <v-tab> <v-icon left>mdi-file-edit</v-icon>Informacion Académica </v-tab>
       <v-tab>
-        <v-icon left>mdi-access-point</v-icon>Informacion Profecional
+        <v-icon left>mdi-access-point</v-icon>Informacion Profesional
       </v-tab>
 
       <v-tab-item>
         <v-container>
-          <v-subheader class="justify-center"><h3>INFORMACION PERSONAL</h3></v-subheader>
+          <v-subheader class="justify-center"
+            ><h3>INFORMACION PERSONAL</h3></v-subheader
+          >
           <!-- ----------------------------------------------------------------------------------------------------
                       ------------------------------------------ NOMBRES -------------------------------------------------
                       ---------------------------------------------------------------------------------------------------- -->
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form ref="form" v-model="valid" lazy-validation  @submit.prevent="submitHandler">
             <v-layout class="justify-center">
               <v-flex xs4>
                 <v-text-field
@@ -120,22 +122,23 @@
                 </v-text-field>
               </v-flex>
             </v-layout>
-<!-- ----------------------------------------------------------------------------------------------------
+            <!-- ----------------------------------------------------------------------------------------------------
                       ------------------------------------------CODIGO PAIS NACIMIENTO -------------------------------------------------
                       ---------------------------------------------------------------------------------------------------- -->
-              
 
             <v-layout class="justify-center">
               <v-flex xs4>
                 <v-select
-                prepend-inner-icon="mdi-web"
+                  prepend-inner-icon="mdi-web"
                   v-model="VCodPaisNacimiento"
                   :counter="20"
                   :items="this.Paises"
-                  label="Codigo Pais Nacimiento"
+                  label="Pais Nacimiento"
                   filled
                   dense
-                  :rules="[(v) => !!v || 'El Codigo Pais Nacimiento es requerido']"
+                  :rules="[
+                    (v) => !!v || 'El Pais Nacimiento es requerido',
+                  ]"
                   required
                 ></v-select>
               </v-flex>
@@ -145,13 +148,13 @@
                 <v-select
                   prepend-inner-icon="mdi-city"
                   v-model="VCodDeptoNacimiento"
-                  :items="FiltroDepto"
+                  :items="FiltroCdoDepto"
                   :counter="20"
-                  label="Codigo Departamento Nacimiento"
+                  label="Departamento Nacimiento"
                   filled
                   dense
                   required
-                  :rules="[(v) => !!v || 'El Campo Codigo Departamento es requerido']"
+                  :rules="[(v) =>!!v ||'El Campo Departamento Nacimiento es requerido',]"
                 >
                 </v-select>
               </v-flex>
@@ -161,10 +164,10 @@
                 <v-select
                   prepend-inner-icon="mdi-city"
                   v-model="VCodMunNacimiento"
-                  :items="FiltroMcipios"
+                  :items="FiltroCdoMcipios"
                   :counter="20"
-                  :rules="[(v) => !!v || 'El Campo Codigo Municipio es requerido']"
-                  label="Codigo Municipio Nacimiento"
+                  :rules="[(v) =>!!v ||'El Campo Municipio Nacimiento es requerido',]"
+                  label="Municipio Nacimiento"
                   filled
                   dense
                   required
@@ -174,14 +177,13 @@
             </v-layout>
             <!------------------------------>
 
-
             <v-layout class="justify-center">
               <v-flex xs4>
                 <v-select
                   prepend-inner-icon="mdi-human"
-                  :items="EstadoCivil"
+                  :items="FiltroEstadoCivil"
                   v-model="VEstadoCivil"
-                  :rules="[(v) => !!v || 'El Campo Género es requerido']"
+                  :rules="[(v) => !!v || 'El Campo Estado Civil es requerido']"
                   label="Estado Civil"
                   filled
                   dense
@@ -251,7 +253,7 @@
                   v-model="VDireccion"
                   :counter="40"
                   :rules="DireccionlRules"
-                  label="Direccion"
+                  label="Direccion de Residencia"
                   filled
                   dense
                   required
@@ -270,7 +272,7 @@
                   v-model="VBarrio"
                   :counter="40"
                   :rules="DireccionlRules"
-                  label="Barrio"
+                  label="Barrio de Residencia"
                   filled
                   dense
                   required
@@ -284,7 +286,7 @@
               <v-flex xs4>
                 <v-select
                   prepend-inner-icon="mdi-web"
-                  v-model="VPaisResidencia"
+                  v-model="VCodPaisResidencia"
                   :counter="20"
                   :items="this.Paises"
                   label="Pais Residencia"
@@ -302,10 +304,8 @@
                 <v-select
                   prepend-inner-icon="mdi-city"
                   :items="FiltroDepto"
-                  v-model="VDeptoResidencia"
-                  :rules="[
-                    (v) => !!v || 'El departamento Residencia es requerido',
-                  ]"
+                  v-model="VCodDeptoResidencia"
+                  :rules="[(v) => !!v || 'El departamento Residencia es requerido',]"
                   label="Departamento Residencia"
                   filled
                   dense
@@ -316,10 +316,8 @@
                 <v-select
                   prepend-inner-icon="mdi-city"
                   :items="FiltroMcipios"
-                  v-model="VMuniResidencia"
-                  :rules="[
-                    (v) => !!v || 'El municipio de Residencia es requerido',
-                  ]"
+                  v-model="VCodMunResidencia"
+                  :rules="[(v) => !!v || 'El municipio de Residencia es requerido',]"
                   label="Municipio Residencia"
                   filled
                   dense
@@ -339,28 +337,15 @@
               >
             </div>
           </v-form>
-          <v-snackbar
-      v-model="snackbar"
-      
-    >
-      {{ mensaje }}
-
-      <v-btn
-          color="blue"
-          text
-         
-          @click="snackbar = false"
-        >
-          Cerrar
-        </v-btn>
-      
-    </v-snackbar>
+          <v-snackbar v-model="snackbar" color="green darken-2">{{ mensaje }}</v-snackbar>
         </v-container>
       </v-tab-item>
 
       <v-tab-item>
         <v-container>
-          <v-subheader class="justify-center"><h3>INFORMACION ACADEMICA</h3></v-subheader>
+          <v-subheader class="justify-center"
+            ><h3>INFORMACION ACADEMICA</h3></v-subheader
+          >
           <!-- ----------------------------------------------------------------------------------------------------
         ------------------------------------------ CENTRO EDUCATIVO ---------------------------------------------
         ---------------------------------------------------------------------------------------------------- -->
@@ -513,9 +498,7 @@
             <!-- Botones de accion en el componente de formacion -->
 
             <div class="text-center">
-              <v-btn  color="black" class="ma-2 yellow--text"
-                >Guardar</v-btn
-              >
+              <v-btn color="black" class="ma-2 yellow--text">Guardar</v-btn>
               <v-btn @click="Limpiar" color="black" class="ma-2 yellow--text"
                 >Limpiar</v-btn
               >
@@ -526,7 +509,9 @@
 
       <v-tab-item>
         <v-container>
-          <v-subheader class="justify-center"><h3>INFORMACION LABORAL</h3></v-subheader>
+          <v-subheader class="justify-center"
+            ><h3>INFORMACION LABORAL</h3></v-subheader
+          >
           <!-- ----------------------------------------------------------------------------------------------------
         ------------------------------------------ EMPRESA ---------------------------------------------
         ---------------------------------------------------------------------------------------------------- -->
@@ -654,11 +639,13 @@
 
               <v-flex xs4>
                 <v-select
-                  :items="ListDepartamento"
-                  v-model="VDepto"
-                  :rules="[(v) => !!v || 'El departamento es requerido']"
+                  :items="FiltroDeptoLabor"
+                  v-model="VDeptoLabor"
+                  :rules="[
+                    (v) => !!v || 'El departamento donde Labora es requerido',
+                  ]"
                   filled
-                  label="Departamento"
+                  label="Departamento donde Labora"
                   dense
                 ></v-select>
               </v-flex>
@@ -668,11 +655,13 @@
 
               <v-flex xs4>
                 <v-select
-                  :items="ListMcipios"
-                  v-model="VMuni"
-                  :rules="[(v) => !!v || 'El municipio es requerido']"
+                  :items="FiltroMcipiosLabor"
+                  v-model="VMuniLabor"
+                  :rules="[
+                    (v) => !!v || 'El municipio donde Labora es requerido',
+                  ]"
                   filled
-                  label="Municipio"
+                  label="Municipio donde Labora"
                   dense
                 ></v-select>
               </v-flex>
@@ -718,9 +707,7 @@
 
             <!-- Botones de accion en el componente de formacion -->
             <div class="text-center">
-              <v-btn  color="black" class="ma-2 yellow--text"
-                >Guardar</v-btn
-              >
+              <v-btn color="black" class="ma-2 yellow--text">Guardar</v-btn>
               <v-btn @click="Limpiar" color="black" class="ma-2 yellow--text"
                 >Limpiar</v-btn
               >
@@ -746,8 +733,8 @@ export default {
   },
   data: () => ({
     tab: "option-1",
-    snackbar:true,
-    mensaje:"Guardado con exito",
+    snackbar: false,
+    mensaje: "Guardado con exito",
     //V-models de datos personales
     VNombres: "",
     VApellidos: "",
@@ -761,9 +748,9 @@ export default {
     VTelMovil: "",
     VDireccion: "",
     VBarrio: "",
-    VPaisResidencia: "",
-    VDeptoResidencia: "",
-    VMuniResidencia: "",
+    VCodPaisResidencia: "",
+    VCodDeptoResidencia: "",
+    VCodMunResidencia: "",
     VCodPaisNacimiento: "",
     VCodDeptoNacimiento: "",
     VCodMunNacimiento: "",
@@ -780,20 +767,21 @@ export default {
     VArea: "",
     VAñoInicialExperiencia: "",
     VMesInicial: "",
-    VAñoFinal : "",
+    VAñoFinal: "",
     VMesFinal: "",
-    VDepto: "",
-    VMuni: "",
+    VDeptoLabor: "",
+    VMuniLabor: "",
     VCargo: "",
     VFunciones: "",
     //
-    TipoId: "",
     Paises: [{ value: "170", text: "Colombia" }],
     ListDepartamento: Departamentos,
     ListMcipios: Mcipios,
-    ListTipoId: [],
-    EstadoCivil: [],
     FiltraMunicipio: "",
+    ListTipoId: [],
+    TipoId: "",
+    ListEstadoCivil: [],
+    EstadoCivil: "",
     NroIdRules: "",
     telRules: "",
     DireccionlRules: "",
@@ -828,22 +816,11 @@ export default {
     ],
     //REGLAS EXPERIENCIA LABORAL
 
-    RulesCargo:[
-    (v) => !!v || "El Cargo es requerido",
-    ],
-    RulesFunciones:[
-    (v) => !!v || "La funcion es requerido",
-    ],
+    RulesCargo: [(v) => !!v || "El Cargo es requerido"],
+    RulesFunciones: [(v) => !!v || "La funcion es requerido"],
 
     //INFORMACION ACADEMICA
     FormacionValid: true,
-    VEducativo: "",
-    VEstudio: "",
-    VAñoInicial: "",
-    VMesInicial: "",
-    VAñoFinal: "",
-    VMesFinal: "",
-    VEeducacion: "",
     valid: true,
     eeducacion: [
       { value: "1", text: "Culminado" },
@@ -1054,61 +1031,95 @@ export default {
         (tipoid) => tipoid.IdClasificacion == 1
       ));
     },
-    EstadoCivil: function () {
-      return (this.EstadoCivil = this.DatosClasificacionTipo.filter(
+    FiltroEstadoCivil: function () {
+      return (this.ListEstadoCivil = this.DatosClasificacionTipo.filter(
         (Gen) => Gen.IdClasificacion == 2
       ));
     },
     FiltroDepto: function () {
       return (this.ListDepartamento = Departamentos.filter(
-        (Depto) => Depto.CodPais == this.VPaisResidencia
+        (Depto) => Depto.CodPais == this.VCodPaisResidencia
       ));
     },
     FiltroMcipios: function () {
       return (this.ListMcipios = Mcipios.filter(
-        (Mpio) => Mpio.depto == this.VDeptoResidencia
+        (Mpio) => Mpio.depto == this.VCodDeptoResidencia
+      ));
+    },
+    FiltroCdoDepto: function () {
+      return (this.ListDepartamento = Departamentos.filter(
+        (Depto) => Depto.CodPais == this.VCodPaisNacimiento
+      ));
+    },
+    FiltroCdoMcipios: function () {
+      return (this.ListMcipios = Mcipios.filter(
+        (Mpio) => Mpio.depto == this.VCodDeptoNacimiento
+      ));
+    },
+    FiltroDeptoLabor: function () {
+      return (this.ListDepartamento = Departamentos.filter(
+        (Depto) => Depto.CodPais == this.VCodPaisResidencia
+      ));
+    },
+    FiltroMcipiosLabor: function () {
+      return (this.ListMcipios = Mcipios.filter(
+        (Mpio) => Mpio.depto == this.VDeptoLabor
       ));
     },
   },
 
   methods: {
     ...mapMutations(["AsignarValoresPersonales"]),
-    ...mapActions(["GetDatosClasificacionTipo", "Accion_GuardarValoresPersonales"]),
+    ...mapActions([
+      "GetDatosClasificacionTipo",
+      "Accion_GuardarValoresPersonales",
+    ]),
 
     ValidarFormularioPersonales() {
-
       if (this.$refs.form.validate()) {
+        const Candidato = {
+          Nombres: this.VNombres,
+          Apellidos: this.VApellidos,
+          Profesion: this.VProfesion,
+          TipoId: this.VTipoId,
+          NroId: this.VNroId,
+          FechaNacimiento: this.VFechaNacimiento,
+          EstadoCivil: this.VEstadoCivil,
+          Religion: this.VReligion,
+          TelefonoFijo: this.VTelfijo,
+          TelefonoMovil: this.VTelMovil,
+          DireccionResidencia: this.VDireccion,
+          BarrioResidencia: this.VBarrio,
+          CodPaisResidencia: this.VCodPaisResidencia,
+          CodDeptoResidencia: this.VCodDeptoResidencia,
+          CodMunResidencia: this.VCodMunResidencia,
+          CodPaisNacimiento: this.VCodPaisNacimiento,
+          CodDeptoNacimiento: this.VCodDeptoNacimiento,
+          CodMunNacimiento: this.VCodMunNacimiento,
+        };
 
-            const Candidato = {
-              Nombres: this.VNombres,
-              Apellidos: this.VApellidos,
-              Profesion: this.VProfesion,
-              TipoId: this.VTipoId,
-              NroId: this.VNroId,
-              FechaNacimiento: this.VFechaNacimiento,
-              EstadoCivil: this.VEstadoCivil,
-              Religion: this.VReligion,
-              TelefonoFijo: this.VTelfijo,
-              TelefonoMovil: this.VTelMovil,
-              DireccionResidencia: this.VDireccion,
-              BarrioResidencia: this.VBarrio,
-              PaisResidencia: this.VPaisResidencia,
-              DeptoResidencia: this.VDeptoResidencia,
-              MuniResidencia: this.VMuniResidencia,
-              VCodPaisNacimiento: this.VCodPaisNacimiento,
-              VCodDeptoNacimiento: this.VCodDeptoNacimiento,
-              VCodMunNacimiento: this.VCodMunNacimiento
-            }; 
-
-              //Actualizar el estado de datos personales con la mutacion
-              store.commit('AsignarValoresPersonales',{Candidato})
-              store.dispatch("Accion_GuardarValoresPersonales");
-
-      
+        //Actualizar el estado de datos personales con la mutacion
+        store.commit("AsignarValoresPersonales", { Candidato });
+        store.dispatch("Accion_GuardarValoresPersonales");
       } else {
         this.$refs.form.validate();
       }
     },
+
+    
+    submitHandler() {
+        if (this.$refs.form.validate()) {
+          setTimeout(
+            (this.handler = () => {
+              this.snackbar = true;
+            }),
+            (this.timeout = 500),
+            this.$refs.formulario.reset()
+          );
+          
+        }
+      },
+    
 
     validate() {
       this.$refs.form.validate();

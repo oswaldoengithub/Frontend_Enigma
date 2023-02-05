@@ -10,49 +10,43 @@
       <v-toolbar-title>Gran Logia de Colombia</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <!-- <v-btn icon to="/">
-        <v-icon>mdi-home</v-icon>
-        <v-tooltip activator="parent" location="bottom">Inicio</v-tooltip>
-      </v-btn> -->
+      <!-- small v-if="ValorLogin == 1 && tipousuario == 'Administrador'" 
+      :to="{name:'homeadminview'}" -->
 
-     
-        <span v-if="username !== '' ">Bienvenido: {{username}}</span>
-   
+      <div v-show="username !== ''">Bienvenido: {{ username }}</div>
 
-      <v-btn icon :to="{ name: 'homeafiliadoview' }">
-      <v-tooltip bottom >
-      <template v-slot:activator="{ on, attrs }">
-        <v-icon color="primary" dark v-bind="attrs" v-on="on" >
-          mdi-home
-        </v-icon>
-      </template>
-      <span>Ingresar</span>
-    </v-tooltip>
-  </v-btn>
+      <v-btn small @click="InicioSesion()">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="yellow" dark v-bind="attrs" v-on="on">
+              mdi-home
+            </v-icon>
+          </template>
+          <span>Ingresar</span>
+        </v-tooltip>
+      </v-btn>
 
-
-
-<!--       <v-btn small v-if="VarLogin == 1 && TipoUsuario == 'Persona'" class="blue darken-1" :to="{name:'areapersona'}">
+      <!--       <v-btn small v-if="VarLogin == 1 && TipoUsuario == 'Persona'" class="blue darken-1" :to="{name:'areapersona'}">
         <v-icon v-if="TipoUsuario == 'Persona' || TipoUsuario == ''" >mdi-account</v-icon>
         <v-icon v-if="TipoUsuario == 'Empresa' || TipoUsuario == ''" >mdi-home-modern</v-icon>
         <span class="mr-0 ">{{NombreUsuario.toLowerCase()}}</span>
       </v-btn> -->
-
-
-
-      
-
-
-      <v-btn small @click="cerrarSession()" class="dark" text>
-        <span class="mr-2">Cerrar Sesión</span> 
-        <v-icon>mdi-logout</v-icon>
-        </v-btn>
+      <v-btn small @click="cerrarSession()">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="yellow" dark v-bind="attrs" v-on="on">
+              mdi-logout
+            </v-icon>
+          </template>
+          <span>Cerrar Sesión</span>
+        </v-tooltip>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
       <router-view />
     </v-main>
-<!-- 
+    <!-- 
     <v-footer dark padless>
       <v-card class="flex" flat tile>
         <v-card-title class="dark">
@@ -74,53 +68,55 @@
         </v-card-text>
       </v-card>
     </v-footer> -->
-
-    
   </v-app>
 </template>
 
 <script>
-
 import auth from "@/auth";
 import store from "./store/index.js";
 import { mapState } from "vuex";
-
 
 export default {
   name: "App",
 
   data: () => ({
-    icons: [
-        'mdi-facebook',
-        'mdi-twitter',
-        'mdi-linkedin',
-        'mdi-instagram',
-      ],
+    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
   }),
 
-  methods:{
-    async cerrarSession() {        
-        try {
-          await auth.deleteUserLogged();
-          store.commit('AsignarValorLogin', { ValorLogin: 0, username:'',tipoususrio :'' });
-          this.$router.push("/login")
-        } catch (error) {
-          console.log(error);
-        } 
+  methods: {
+    async cerrarSession() {
+      try {
+        await auth.deleteUserLogged();
+        store.commit("AsignarValorLogin", {
+          ValorLogin: 0,
+          username: "",
+          tipousuario: "",
+        });
+        this.$router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+   async InicioSesion() {
+      try{
+        await auth.setUserLogged();
+      
+        if (tipousuario == "Afiliado") {
+          this.$router.push("/HomeAfiliadoView");
+        } else {
+          this.$router.push("/homeadminview");
+        }
+      }catch (error) {
+        console.log(error);
+      } 
+    }
+  },
+  computed: {
+    userLogged() {
+      return auth.getUserLogged();
     },
 
+    ...mapState(["ValorLogin", "username", "tipousuario"]),
   },
-
-  computed: 
-  {
-      userLogged() {
-        return auth.getUserLogged();
-      },
-
-  ...mapState(['ValorLogin','username','tipousuario'])
-  }
-
-  
-
 };
 </script>

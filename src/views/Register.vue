@@ -114,7 +114,7 @@ export default {
             const username = this.username
             const email = this.email
             const password = this.password
-            const tipousuario = store.state.TipoIngreso
+            const TipoIngreso = store.state.tipousuario
             //const CodigoHabilitacion = this.CodigoHabilitacion
         
             const user = {username,email, password};

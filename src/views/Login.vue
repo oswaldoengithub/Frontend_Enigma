@@ -89,22 +89,12 @@ export default {
         });
 
         //Se llama la accion que debe llenar los estados de la data de la persona
-
-        if (Name.tipousuario == "Empresa") {
-          store.dispatch("GetDatosEmpresa", { email: Name.email });
+          //selecciona el tipo de usuario
+       if (Name.tipousuario == "Administrador") {
+          this.$router.push("/HomeAdminView");
         } else {
-          store.dispatch("GetDatosPersona", { email: Name.email });
+          this.$router.push("/HomeAfiliadoView");
         }
-
-        if (Name.tipousuario == "Persona") {
-          this.$router.push("/");
-        } else {
-          this.$router.push("/");
-        }
-
-        /*         if (this.$route.path != '/regparticipante') {
-          this.$router.push("/regparticipante");
-           } */
       } catch (error) {
         this.error = true;
         console.log("error:", error);

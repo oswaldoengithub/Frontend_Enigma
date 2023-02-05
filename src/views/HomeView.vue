@@ -1,18 +1,18 @@
 <template>
-  <HomeAfiliado />
+  <Login />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
 // Components
-import HomeAfiliado from '../components/HomeAfiliado.vue';
+import Login from '../views/Login.vue';
 
 export default defineComponent({
   name: 'HomeView',
 
   components: {
-    HomeAfiliado,
+    Login,
   },
 });
 </script>
