@@ -10,22 +10,21 @@
       <v-toolbar-title>Gran Logia de Colombia</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <!-- small v-if="ValorLogin == 1 && tipousuario == 'Administrador'" 
-      :to="{name:'homeadminview'}" -->
-
       <div v-show="username !== ''">Bienvenido: {{ username }}</div>
 
-      <v-btn small @click="InicioSesion()">
+      <v-divider vertical class="mx-2"></v-divider>
+
+      <v-btn small @click="Inicio()">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon color="yellow" dark v-bind="attrs" v-on="on">
               mdi-home
             </v-icon>
           </template>
-          <span>Ingresar</span>
+          <span>Inicio</span>
         </v-tooltip>
       </v-btn>
-
+      <v-divider vertical class="mx-2"></v-divider>
       <!--       <v-btn small v-if="VarLogin == 1 && TipoUsuario == 'Persona'" class="blue darken-1" :to="{name:'areapersona'}">
         <v-icon v-if="TipoUsuario == 'Persona' || TipoUsuario == ''" >mdi-account</v-icon>
         <v-icon v-if="TipoUsuario == 'Empresa' || TipoUsuario == ''" >mdi-home-modern</v-icon>
@@ -46,28 +45,38 @@
     <v-main>
       <router-view />
     </v-main>
-    <!-- 
-    <v-footer dark padless>
-      <v-card class="flex" flat tile>
-        <v-card-title class="dark">
-          <strong class="subheading"
-            >¡Conéctate con nosotros en las redes sociales!</strong
-          >
 
-          <v-spacer></v-spacer>
+    <v-divider></v-divider>
 
-          <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon>
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
-        </v-card-title>
+    <v-footer padless>
+    <v-card
+      flat
+      tile
+      class="text-center mx-auto"
+      width="100%"
+    >
+      <v-card-text>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4"
+          icon
+        >
+          <v-icon size="24px">
+            {{ icon }}
+          </v-icon>
+        </v-btn>
+      </v-card-text>
 
-        <v-card-text class="py-2 white--text text-center">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-        </v-card-text>
-      </v-card>
-    </v-footer> -->
+      <v-card-text>Sede en Bogotá.
+        Mansión Kopp | Cra. Quinta 17 - 79 | Teléfono: 7 42 61 65 Todos los
+          derechos reservados.
+      </v-card-text>
+      <v-card-text>
+        {{ new Date().getFullYear() }} — <strong>Gran Logia de Colombia</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>   
   </v-app>
 </template>
 
@@ -83,6 +92,8 @@ export default {
     icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
   }),
 
+  
+
   methods: {
     async cerrarSession() {
       try {
@@ -97,19 +108,26 @@ export default {
         console.log(error);
       }
     },
-   async InicioSesion() {
-      try{
-        await auth.setUserLogged();
       
-        if (tipousuario == "Afiliado") {
-          this.$router.push("/HomeAfiliadoView");
-        } else {
-          this.$router.push("/homeadminview");
-        }
-      }catch (error) {
-        console.log(error);
-      } 
+     Inicio () {
+     if(this.tipousuario !=='Afiliado')
+      this.$router.push("/HomeAdminView")
+      else 
+      this.$router.push("/HomeAfiliadoView");
     }
+    /* async InicioSesion() {
+      try {
+        await auth.getUserLogged();
+        store.commit("AsignarValorLogin", {
+          ValorLogin: 1,
+          username: "",
+          tipousuario: "",
+        });
+      
+      } catch (error) {
+        console.log(error);
+      }
+    }, */
   },
   computed: {
     userLogged() {
